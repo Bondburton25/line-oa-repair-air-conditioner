@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>แบบฟอร์มซ่อมแอร์</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <!-- Set Style -->
+    <style>
+      body,
+      select,
+      button,
+      input {
+        font-family: "Kanit", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <!-- Start Container -->
+    <div class="container">
+      <!-- Start Header Content -->
+      <div class="row">
+        <div class="col s12 center-align">
+          <h5>แบบฟอร์มซ่อมแอร์</h5>
+        </div>
+      </div>
+      <!-- End Header Content -->
+
+      <!-- Start Form Content -->
+      <div class="row">
+        <form id="form" class="col s12" autocomplete="off">
+
+        <div class="input-field">
+            <label for="project"><h6>โครงการ/บริษัท</h6></label>
+            <input id="project" type="text" class="validate" />
+        </div>
+
+        <div class="input-field">
+            <label for="customer"><h6>ชื่อลูกค้า</h6></label>
+            <input id="customer" type="text" required class="validate" />
+        </div>
+
+        <div class="input-field">
+            <label for="phoneNumber"><h6>เบอร์โทรศัพท์</h6></label>
+            <input id="phoneNumber" type="text" required class="validate" />
+        </div>
+
+        <div class="input-field">
+            <label for="address"><h6>ที่อยู่หน้างาน</h6></label>
+            <input id="address" type="text" required class="validate" />
+        </div>
+
+        <div class="input-field">
+            <label for="model"><h6>รุ่นแอร์ที่ต้องการแจ้งซ่อม</h6></label>
+            <input id="model" type="text" class="validate" />
+        </div>
+        <div class="input-field">
+            <label for="serialNumber"><h6>หมายเลขเครื่อง</h6></label>
+            <input id="serialNumber" type="text" class="validate" />
+        </div>
+        
+        <div class="input-field">
+            <label for="malfunction">อาการแอร์ของแอร์</label>
+            <textarea id="malfunction" class="materialize-textarea"></textarea>
+        </div>
+
+        <div class="input-field">
+            <label for="email">อีเมล</label>
+            <input id="email" type="email" class="" />
+        </div>
+
+        <div class="input-field">
+            <label for="lineId">LINE ID</label>
+            <input id="lineId" type="text" class="" />
+        </div>
+
+        <div class="input-field">
+            <label for="meeting-time">วันเวลาที่สะดวกให้เข้าซ่อม</label>
+            <input type="datetime-local" id="meeting-time" name="meeting-time">
+        </div>
+
+        <!-- Start Submit Button -->
+        <button id="btn" class="btn waves-effect waves-light" type="submit">
+            ส่งข้อมูล
+        </button>
+          <!-- End Submit Button -->
+        </form>
+      </div>
+      <!-- End Form Content -->
+
+      <!-- Start Table Content -->
+      <div id="result"></div>
+      <!-- End Table Content -->
+
+      <!-- Start Footer -->
+      <div id="footer" class="center-align">
+        <p>© 2023 JS Service</p>
+      </div>
+      <!-- End Footer -->
+    </div>
+    <!-- End Container -->
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Integrating the LIFF SDK -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+    <!-- Start Script For Get Form Values and Calculation -->
+    <script>
+      // Initialize LIFF
+      liff
+        .init({ liffId: "1657806485-BKxNWbMp" })
+        .then(() => {
+          runApp();
+        })
+        .catch((err) => {
+          console.error(err.code, error.message);
+        });
+
+      // runApp();
+      function runApp() {
+        // Initialize AutoNumeric
+        // let car_price = new AutoNumeric("#carPrice", "integerPos");
+        // let down_paymentnew = new AutoNumeric("#downPayment", "integerPos");
+
+        // Listen for form submit
+        let form = document.getElementById("form");
+        form.addEventListener("submit", submitForm);
+
+        // Function form submit
+        function submitForm(e) {
+          e.preventDefault();
+          
+          let project = document.getElementById("project").value;
+          let customer = document.getElementById("customer").value;
+          let phoneNumber = document.getElementById("phoneNumber").value;
+          let address = document.getElementById("address").value;
+          let model = document.getElementById("model").value;
+          let serialNumber = document.getElementById("serialNumber").value;
+          let email = document.getElementById("email").value;
+          let malfunction = document.getElementById("malfunction").value;
+          let lineId = document.getElementById("lineId").value;
+          let meetingTime = document.getElementById("meeting-time").value;
+          
+          // Reset form
+          form.reset();
+
+          // Sends messages on behalf of the user to the chat screen where the LIFF app is opened.
+          if (
+            liff.getContext().type !== "none" && liff.getContext().type !== "external"
+          ) {
+            // Create flex message
+            let message = createFlexMessage(
+              project,
+              customer,
+              phoneNumber,
+              address,
+              model,
+              serialNumber,
+              email,
+              malfunction,
+              lineId,
+              meetingTime
+            );
+            // Send messages
+            liff
+              .sendMessages(message)
+              .then(() => {
+                liff.closeWindow();
+              })
+              .catch((err) => {
+                console.error(err.code, error.message);
+              });
+          } else {
+            // Result table in browser
+            createResultTable(
+              carYear,
+              carPrice,
+              downPayment,
+              loan,
+              resultCalculate,
+              customerType
+            );
+          }
+        }
+      }
+
+      // Creat flex message
+      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingTime)
+      {
+        // Using flex message simulator for json
+        let flexJson = {
+              "type": "bubble",
+              "body": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "แจ้งซ่อม",
+                    "weight": "bold",
+                    "size": "xxl",
+                    "margin": "md"
+                  },
+                  {
+                    "type": "text",
+                    "text": "ที่อยู่หน้างาน Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                    "size": "xs",
+                    "color": "#aaaaaa",
+                    "wrap": true
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "xxl"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "margin": "xxl",
+                    "spacing": "sm",
+                    "contents": [
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "โมเดลแอร์",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "แอร์ผนัง DAIKIN FTKF12XV2S 12300 บีทียู อินเวอร์เตอร์",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "Serial number",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "1227321",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "อาการเสีย",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "แอร์ทำงานเสียดังมากและไม่เย็น",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      },
+                      {
+                        "type": "separator",
+                        "margin": "xxl"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "xxl",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "ข้อมูลลูกค้า",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "คุณ ไกรวิชญ์ วรรณ์แก้ว",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "เบอร์โทรศัพท์",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "$7.31",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "LINE ID",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "werkewrkweor",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "Email",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "kraiwit.dev@gmail.com",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "styles": {
+                "footer": {
+                  "separator": true
+                }
+              }
+            };
+        return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
+      }
+    </script>
+  </body>
+</html>
