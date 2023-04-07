@@ -110,7 +110,7 @@
     <!-- Integrating the LIFF SDK -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
-    <!-- Start Script For Get Form Values and Calculation -->
+    <!-- Start Script For Get Form Values -->
     <script>
       // Initialize LIFF
       liff
@@ -124,17 +124,10 @@
 
       // runApp();
       function runApp() {
-        // Initialize AutoNumeric
-        // let car_price = new AutoNumeric("#carPrice", "integerPos");
-        // let down_paymentnew = new AutoNumeric("#downPayment", "integerPos");
-
-        // Listen for form submit
         let form = document.getElementById("form");
         form.addEventListener("submit", submitForm);
-        // Function form submit
         function submitForm(e) {
           e.preventDefault();
-          
           let project = document.getElementById("project").value;
           let customer = document.getElementById("customer").value;
           let phoneNumber = document.getElementById("phoneNumber").value;
