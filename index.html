@@ -39,7 +39,7 @@
             <input id="project" type="text" class="validate" />
         </div>
 
-        <div class="input-field">
+        <!-- <div class="input-field">
             <label for="customer"><h6>ชื่อลูกค้า</h6></label>
             <input id="customer" type="text" required class="validate" />
         </div>
@@ -71,31 +71,18 @@
         <div class="input-field">
             <label for="email">อีเมล</label>
             <input id="email" type="email" class="" />
-        </div>
-
-        <div class="input-field">
-            <label for="lineId">LINE ID</label>
-            <input id="lineId" type="text" class="" />
-        </div>
-
-        <!-- <div class="input-field">
-            <label for="meeting-time">วันเวลาที่สะดวกให้เข้าซ่อม</label>
-            <input type="datetime-local" id="meeting-time" name="meeting-time">
         </div> -->
 
-        <!-- Start Submit Button -->
+        <!-- <div class="input-field">
+            <label for="lineId">LINE ID</label>
+            <input id="lineId" type="text" class="" />
+        </div> -->
+
         <button id="btn" class="btn waves-effect waves-light" type="submit">
             ส่งข้อมูล
         </button>
-          <!-- End Submit Button -->
         </form>
       </div>
-      <!-- End Form Content -->
-
-      <!-- Start Table Content -->
-      <div id="result"></div>
-      <!-- End Table Content -->
-
       <!-- Start Footer -->
       <div id="footer" class="center-align">
         <p>© 2023 JS Service</p>
@@ -129,16 +116,16 @@
         function submitForm(e) {
           e.preventDefault();
           let project = document.getElementById("project").value;
-          let customer = document.getElementById("customer").value;
-          let phoneNumber = document.getElementById("phoneNumber").value;
-          let address = document.getElementById("address").value;
-          let model = document.getElementById("model").value;
-          let serialNumber = document.getElementById("serialNumber").value;
-          let email = document.getElementById("email").value;
-          let malfunction = document.getElementById("malfunction").value;
-          let lineId = document.getElementById("lineId").value;
-          let meetingTime = document.getElementById("meeting-time").value;
-          
+          // let customer = document.getElementById("customer").value;
+          // let phoneNumber = document.getElementById("phoneNumber").value;
+          // let address = document.getElementById("address").value;
+          // let model = document.getElementById("model").value;
+          // let serialNumber = document.getElementById("serialNumber").value;
+          // let email = document.getElementById("email").value;
+          // let malfunction = document.getElementById("malfunction").value;
+          // let lineId = document.getElementById("lineId").value;
+          // let meetingTime = document.getElementById("meeting-time").value;
+
           // Reset form
           form.reset();
 
@@ -146,18 +133,19 @@
           if (
             liff.getContext().type !== "none" && liff.getContext().type !== "external"
           ) {
+            console.log(555);
             // Create flex message
             let message = createFlexMessage(
-              project,
-              customer,
-              phoneNumber,
-              address,
-              model,
-              serialNumber,
-              email,
-              malfunction,
-              lineId,
-              meetingTime
+              project
+              // customer,
+              // phoneNumber,
+              // address,
+              // model,
+              // serialNumber,
+              // email,
+              // malfunction,
+              // lineId,
+              // meetingTime
             );
             // Send messages
             liff
@@ -168,22 +156,23 @@
               .catch((err) => {
                 console.error(err.code, error.message);
               });
-          } else {
-            // Result table in browser
-            createResultTable(
-              carYear,
-              carPrice,
-              downPayment,
-              loan,
-              resultCalculate,
-              customerType
-            );
           }
         }
       }
 
       // Creat flex message
-      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingTime)
+      function createFlexMessage(
+        project
+        // customer,
+        // phoneNumber,
+        // address,
+        // model,
+        // serialNumber,
+        // email,
+        // malfunction,
+        // lineId,
+        // meetingTime
+        )
       {
         // Using flex message simulator for json
         let flexJson = {
