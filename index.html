@@ -372,6 +372,37 @@
             };
         return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
       }
+
+      // function setContent(content)
+      // {
+      //   var opt = {
+      //     "Method": "POST",
+      //     "payload": {"message": content},
+      //     "headers": {"Authorization": "Bearer " + Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N}
+      //   }
+      //   UrlFeatchApp.fetch("https://notify-api.line.me/api/notify", opt)
+      // }
+
+      const request = require('request')
+      request({
+        method: 'POST',
+        uri: 'https://notify-api.line.me/api/notify',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        auth: {
+          bearer: 'Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N', //token
+        },
+        form: {
+          message: 'ทดสอบ', //ข้อความที่จะส่ง
+        },
+      }, (err, httpResponse, body) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log(body)
+        }
+      })
     </script>
   </body>
 </html>
