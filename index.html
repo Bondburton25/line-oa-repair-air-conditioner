@@ -25,36 +25,30 @@
       <div class="row pt-5">
         <div class="col s12 center-align">
           <h5>แบบฟอร์มซ่อมแอร์</h5>
-          
         </div>
       </div>
       <!-- End Header Content -->
 
       <!-- Start Form Content -->
       <div class="row">
-        <form id="form" class="col-sm-4 col-12" autocomplete="off">
-          <hr>
+        <form id="form" class="col-sm-3 col-12" autocomplete="off">
+
         <div class="mb-3">
             <label class="form-label" for="project"><h6>โครงการ/บริษัท</h6></label class="form-label" >
             <input id="project" type="text" class="form-control" />
         </div>
-
-
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label  for="customer"><h6>ชื่อลูกค้า</h6></label class="form-label" >
             <input id="customer" type="text" required class="form-control" />
         </div>
-
         <div class="mb-3">
             <label class="form-label" for="phoneNumber"><h6>เบอร์โทรศัพท์</h6></label class="form-label" >
             <input id="phoneNumber" type="text" required class="form-control" />
         </div>
-
         <div class="mb-3">
             <label class="form-label" for="address"><h6>ที่อยู่หน้างาน</h6></label class="form-label" >
             <input id="address" type="text" required class="form-control" />
         </div>
-
         <div class="mb-3">
             <label class="form-label" for="model"><h6>รุ่นแอร์ที่ต้องการแจ้งซ่อม</h6></label class="form-label" >
             <input id="model" type="text" class="form-control" />
@@ -66,32 +60,31 @@
         
         <div class="mb-3">
             <label class="form-label" for="malfunction">อาการแอร์ของแอร์</label class="form-label" >
-            <textarea id="malfunction" class="form-control"></textarea>
+            <textarea id="malfunction" class="materialize-textarea"></textarea>
         </div>
-
         <div class="mb-3">
             <label class="form-label" for="email">อีเมล</label class="form-label" >
-            <input id="email" type="email" class="form-control" />
-        </div>
+            <input id="email" type="email" class="" />
+        </div> -->
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label class="form-label" for="lineId">LINE ID</label class="form-label" >
-            <input id="lineId" type="text" class="form-control" />
-        </div>
+            <input id="lineId" type="text" class="" />
+        </div> -->
 
-        <div class="mb-3">
-         <label for="meetingDate">วันเวลาที่สะดวก:</label>
-         <input type="datetime-local" id="meetingDate" class="form-control">
-        </div>
-
-        <button id="btn" class="btn btn-primary" type="submit">
+        <button id="btn" class="btn waves-effect waves-light" type="submit">
             ส่งข้อมูล
         </button>
         </form>
       </div>
-
+      <!-- Start Footer -->
+      <div id="footer" class="center-align">
+        <p>© 2023 JS Service</p>
+      </div>
+      <!-- End Footer -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Integrating the LIFF SDK -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
       liff
@@ -105,30 +98,45 @@
 
       // runApp();
       function runApp() {
-        let form = document.getElementById("requestForm");
+        let form = document.getElementById("form");
         form.addEventListener("submit", submitForm);
         function submitForm(e) {
           e.preventDefault();
           let project = document.getElementById("project").value;
-          let customer = document.getElementById("customer").value;
-          let phoneNumber = document.getElementById("phoneNumber").value;
-          let address = document.getElementById("address").value;
-          let model = document.getElementById("model").value;
-          let serialNumber = document.getElementById("serialNumber").value;
-          let email = document.getElementById("email").value;
-          let malfunction = document.getElementById("malfunction").value;
-          let lineId = document.getElementById("lineId").value;
-          let meetingDate = document.getElementById("meetingDate").value;
-          
+          // let customer = document.getElementById("customer").value;
+          // let phoneNumber = document.getElementById("phoneNumber").value;
+          // let address = document.getElementById("address").value;
+          // let model = document.getElementById("model").value;
+          // let serialNumber = document.getElementById("serialNumber").value;
+          // let email = document.getElementById("email").value;
+          // let malfunction = document.getElementById("malfunction").value;
+          // let lineId = document.getElementById("lineId").value;
+          // let meetingTime = document.getElementById("meeting-time").value;
+
           // Reset form
           form.reset();
 
           // Sends messages on behalf of the user to the chat screen where the LIFF app is opened.
-          if (liff.getContext().type !== "none" && liff.getContext().type !== "external") {
+          if (
+            liff.getContext().type !== "none" && liff.getContext().type !== "external"
+          ) {
             // Create flex message
-            let message = createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingDate);
+            let message = createFlexMessage(
+              project
+              // customer,
+              // phoneNumber,
+              // address,
+              // model,
+              // serialNumber,
+              // email,
+              // malfunction,
+              // lineId,
+              // meetingTime
+            );
             // Send messages
-            liff.sendMessages(message).then(() => {
+            liff
+              .sendMessages(message)
+              .then(() => {
                 liff.closeWindow();
               })
               .catch((err) => {
@@ -139,100 +147,39 @@
       }
 
       // Creat flex message
-      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingDate)
+      function createFlexMessage(
+        project
+        // customer,
+        // phoneNumber,
+        // address,
+        // model,
+        // serialNumber,
+        // email,
+        // malfunction,
+        // lineId,
+        // meetingTime
+        )
       {
+        // Using flex message simulator for json
         let flexJson = {
-          "type": "bubble",
-          "body": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "แจ้งซ่อม",
-                "weight": "bold",
-                "size": "xxl",
-                "margin": "md"
-              },
-              {
-                "type": "text",
-                "text": `${address}`,
-                "size": "xs",
-                "color": "#aaaaaa",
-                "wrap": true
-              },
-              {
-                "type": "separator",
-                "margin": "xxl"
-              },
-              {
+              "type": "bubble",
+              "body": {
                 "type": "box",
                 "layout": "vertical",
-                "margin": "xxl",
-                "spacing": "sm",
                 "contents": [
                   {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "โมเดลแอร์",
-                        "size": "sm",
-                        "color": "#555555",
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": `${model}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end",
-                        "wrap": true
-                      }
-                    ]
+                    "type": "text",
+                    "text": "แจ้งซ่อม",
+                    "weight": "bold",
+                    "size": "xxl",
+                    "margin": "md"
                   },
                   {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "Serial number",
-                        "size": "sm",
-                        "color": "#555555",
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": `${serialNumber}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end",
-                        "wrap": true
-                      }
-                    ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "อาการเสีย",
-                        "size": "sm",
-                        "color": "#555555",
-                        "flex": 0
-                      },
-                      {
-                        "type": "text",
-                        "text": `${malfunction}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end",
-                        "wrap": true
-                      }
-                    ]
+                    "type": "text",
+                    "text": "ที่อยู่หน้างาน Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                    "size": "xs",
+                    "color": "#aaaaaa",
+                    "wrap": true
                   },
                   {
                     "type": "separator",
@@ -240,67 +187,98 @@
                   },
                   {
                     "type": "box",
-                    "layout": "horizontal",
+                    "layout": "vertical",
                     "margin": "xxl",
+                    "spacing": "sm",
                     "contents": [
                       {
-                        "type": "text",
-                        "text": "ข้อมูลลูกค้า",
-                        "size": "sm",
-                        "color": "#555555"
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "โมเดลแอร์",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "แอร์ผนัง DAIKIN FTKF12XV2S 12300 บีทียู อินเวอร์เตอร์",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
                       },
                       {
-                        "type": "text",
-                        "text": `${customer}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end",
-                        "wrap": true
-                      }
-                    ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "เบอร์โทรศัพท์",
-                        "size": "sm",
-                        "color": "#555555"
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "Serial number",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "1227321",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
                       },
                       {
-                        "type": "text",
-                        "text": `${phoneNumber}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "text",
-                        "text": "LINE ID",
-                        "size": "sm",
-                        "color": "#555555"
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "อาการเสีย",
+                            "size": "sm",
+                            "color": "#555555",
+                            "flex": 0
+                          },
+                          {
+                            "type": "text",
+                            "text": "แอร์ทำงานเสียดังมากและไม่เย็น",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
                       },
                       {
-                        "type": "text",
-                        "text": `${lineId}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
+                        "type": "separator",
+                        "margin": "xxl"
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "margin": "xxl",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "ข้อมูลลูกค้า",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "คุณ ไกรวิชญ์ วรรณ์แก้ว",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
+                      },
                       {
                         "type": "box",
                         "layout": "horizontal",
@@ -313,7 +291,7 @@
                           },
                           {
                             "type": "text",
-                            "text": `${project}`,
+                            text: `${project}`,
                             "size": "sm",
                             "color": "#111111",
                             "align": "end"
@@ -321,33 +299,87 @@
                         ]
                       },
                       {
-                        "type": "text",
-                        "text": "Email",
-                        "size": "sm",
-                        "color": "#555555"
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "เบอร์โทรศัพท์",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "$7.31",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
                       },
                       {
-                        "type": "text",
-                        "text": `${email}`,
-                        "size": "sm",
-                        "color": "#111111",
-                        "align": "end",
-                        "wrap": true
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "LINE ID",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "werkewrkweor",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "Email",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "kraiwit.dev@gmail.com",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end",
+                            "wrap": true
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
+              },
+              "styles": {
+                "footer": {
+                  "separator": true
+                }
               }
-            ]
-          },
-          "styles": {
-            "footer": {
-              "separator": true
-            }
-          }
-        };
+            };
         return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
       }
+
+      // function setContent(content)
+      // {
+      //   var opt = {
+      //     "Method": "POST",
+      //     "payload": {"message": content},
+      //     "headers": {"Authorization": "Bearer " + Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N}
+      //   }
+      //   UrlFeatchApp.fetch("https://notify-api.line.me/api/notify", opt)
+      // }
+
+       
     </script>
   </body>
 </html>
