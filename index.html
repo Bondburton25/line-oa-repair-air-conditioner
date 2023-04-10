@@ -32,7 +32,7 @@
 
       <!-- Start Form Content -->
       <div class="row">
-        <form id="form" class="col s12" autocomplete="off">
+        <form id="requestForm" class="col s12" autocomplete="off">
 
         <div class="input-field">
             <label for="project"><h6>โครงการ/บริษัท</h6></label>
@@ -41,17 +41,17 @@
 
         <div class="input-field">
             <label for="customer"><h6>ชื่อลูกค้า</h6></label>
-            <input id="customer" type="text" required class="validate" />
+            <input id="customer" type="text" class="validate" />
         </div>
 
         <div class="input-field">
             <label for="phoneNumber"><h6>เบอร์โทรศัพท์</h6></label>
-            <input id="phoneNumber" type="text" required class="validate" />
+            <input id="phoneNumber" type="text" class="validate" />
         </div>
 
         <div class="input-field">
             <label for="address"><h6>ที่อยู่หน้างาน</h6></label>
-            <input id="address" type="text" required class="validate" />
+            <input id="address" type="text" class="validate" />
         </div>
 
         <div class="input-field">
@@ -78,39 +78,18 @@
             <input id="lineId" type="text" class="" />
         </div>
 
-        <!-- <div class="input-field">
-            <label for="meeting-time">วันเวลาที่สะดวกให้เข้าซ่อม</label>
-            <input type="datetime-local" id="meeting-time" name="meeting-time">
-        </div> -->
-
-        <!-- Start Submit Button -->
         <button id="btn" class="btn waves-effect waves-light" type="submit">
             ส่งข้อมูล
         </button>
-          <!-- End Submit Button -->
         </form>
       </div>
-      <!-- End Form Content -->
-
-      <!-- Start Table Content -->
-      <div id="result"></div>
-      <!-- End Table Content -->
-
-      <!-- Start Footer -->
       <div id="footer" class="center-align">
         <p>© 2023 JS Service</p>
       </div>
       <!-- End Footer -->
     </div>
-    <!-- End Container -->
-
-    <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <!-- Integrating the LIFF SDK -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
-    <!-- Start Script For Get Form Values -->
     <script>
       // Initialize LIFF
       liff
@@ -124,7 +103,7 @@
 
       // runApp();
       function runApp() {
-        let form = document.getElementById("form");
+        let form = document.getElementById("requestForm");
         form.addEventListener("submit", submitForm);
         function submitForm(e) {
           e.preventDefault();
@@ -137,74 +116,121 @@
           let email = document.getElementById("email").value;
           let malfunction = document.getElementById("malfunction").value;
           let lineId = document.getElementById("lineId").value;
-          let meetingTime = document.getElementById("meeting-time").value;
+          // let meetingTime = document.getElementById("meeting-time").value;
           
           // Reset form
           form.reset();
 
           // Sends messages on behalf of the user to the chat screen where the LIFF app is opened.
-          if (
-            liff.getContext().type !== "none" && liff.getContext().type !== "external"
-          ) {
+          if (liff.getContext().type !== "none" && liff.getContext().type !== "external") {
             // Create flex message
-            let message = createFlexMessage(
-              project,
-              customer,
-              phoneNumber,
-              address,
-              model,
-              serialNumber,
-              email,
-              malfunction,
-              lineId,
-              meetingTime
-            );
+            let message = createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId);
             // Send messages
-            liff
-              .sendMessages(message)
-              .then(() => {
+            liff.sendMessages(message).then(() => {
                 liff.closeWindow();
               })
               .catch((err) => {
                 console.error(err.code, error.message);
               });
-          } else {
-            // Result table in browser
-            createResultTable(
-              carYear,
-              carPrice,
-              downPayment,
-              loan,
-              resultCalculate,
-              customerType
-            );
           }
         }
       }
 
       // Creat flex message
-      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingTime)
+      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId)
       {
-        // Using flex message simulator for json
         let flexJson = {
-              "type": "bubble",
-              "body": {
+          "type": "bubble",
+          "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "แจ้งซ่อม",
+                "weight": "bold",
+                "size": "xxl",
+                "margin": "md"
+              },
+              {
+                "type": "text",
+                "text": "ที่อยู่หน้างาน Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "size": "xs",
+                "color": "#aaaaaa",
+                "wrap": true
+              },
+              {
+                "type": "separator",
+                "margin": "xxl"
+              },
+              {
                 "type": "box",
                 "layout": "vertical",
+                "margin": "xxl",
+                "spacing": "sm",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "แจ้งซ่อม",
-                    "weight": "bold",
-                    "size": "xxl",
-                    "margin": "md"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "โมเดลแอร์",
+                        "size": "sm",
+                        "color": "#555555",
+                        "flex": 0
+                      },
+                      {
+                        "type": "text",
+                        "text": "แอร์ผนัง DAIKIN FTKF12XV2S 12300 บีทียู อินเวอร์เตอร์",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "wrap": true
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "ที่อยู่หน้างาน Miraina Tower, 4-1-6 Shinjuku, Tokyo",
-                    "size": "xs",
-                    "color": "#aaaaaa",
-                    "wrap": true
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "Serial number",
+                        "size": "sm",
+                        "color": "#555555",
+                        "flex": 0
+                      },
+                      {
+                        "type": "text",
+                        "text": "1227321",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "wrap": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "อาการเสีย",
+                        "size": "sm",
+                        "color": "#555555",
+                        "flex": 0
+                      },
+                      {
+                        "type": "text",
+                        "text": "แอร์ทำงานเสียดังมากและไม่เย็น",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "wrap": true
+                      }
+                    ]
                   },
                   {
                     "type": "separator",
@@ -212,166 +238,93 @@
                   },
                   {
                     "type": "box",
-                    "layout": "vertical",
+                    "layout": "horizontal",
                     "margin": "xxl",
-                    "spacing": "sm",
                     "contents": [
                       {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "โมเดลแอร์",
-                            "size": "sm",
-                            "color": "#555555",
-                            "flex": 0
-                          },
-                          {
-                            "type": "text",
-                            "text": "แอร์ผนัง DAIKIN FTKF12XV2S 12300 บีทียู อินเวอร์เตอร์",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end",
-                            "wrap": true
-                          }
-                        ]
+                        "type": "text",
+                        "text": "ข้อมูลลูกค้า",
+                        "size": "sm",
+                        "color": "#555555"
                       },
                       {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "Serial number",
-                            "size": "sm",
-                            "color": "#555555",
-                            "flex": 0
-                          },
-                          {
-                            "type": "text",
-                            "text": "1227321",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end",
-                            "wrap": true
-                          }
-                        ]
+                        "type": "text",
+                        "text": "คุณ ไกรวิชญ์ วรรณ์แก้ว",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "wrap": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "เบอร์โทรศัพท์",
+                        "size": "sm",
+                        "color": "#555555"
                       },
                       {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "อาการเสีย",
-                            "size": "sm",
-                            "color": "#555555",
-                            "flex": 0
-                          },
-                          {
-                            "type": "text",
-                            "text": "แอร์ทำงานเสียดังมากและไม่เย็น",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end",
-                            "wrap": true
-                          }
-                        ]
+                        "type": "text",
+                        "text": "$7.31",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "LINE ID",
+                        "size": "sm",
+                        "color": "#555555"
                       },
                       {
-                        "type": "separator",
-                        "margin": "xxl"
+                        "type": "text",
+                        "text": "werkewrkweor",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "Email",
+                        "size": "sm",
+                        "color": "#555555"
                       },
                       {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "margin": "xxl",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "ข้อมูลลูกค้า",
-                            "size": "sm",
-                            "color": "#555555"
-                          },
-                          {
-                            "type": "text",
-                            "text": "คุณ ไกรวิชญ์ วรรณ์แก้ว",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end",
-                            "wrap": true
-                          }
-                        ]
-                      },
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "เบอร์โทรศัพท์",
-                            "size": "sm",
-                            "color": "#555555"
-                          },
-                          {
-                            "type": "text",
-                            "text": "$7.31",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "LINE ID",
-                            "size": "sm",
-                            "color": "#555555"
-                          },
-                          {
-                            "type": "text",
-                            "text": "werkewrkweor",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "box",
-                        "layout": "horizontal",
-                        "contents": [
-                          {
-                            "type": "text",
-                            "text": "Email",
-                            "size": "sm",
-                            "color": "#555555"
-                          },
-                          {
-                            "type": "text",
-                            "text": "kraiwit.dev@gmail.com",
-                            "size": "sm",
-                            "color": "#111111",
-                            "align": "end",
-                            "wrap": true
-                          }
-                        ]
+                        "type": "text",
+                        "text": "kraiwit.dev@gmail.com",
+                        "size": "sm",
+                        "color": "#111111",
+                        "align": "end",
+                        "wrap": true
                       }
                     ]
                   }
                 ]
-              },
-              "styles": {
-                "footer": {
-                  "separator": true
-                }
               }
-            };
+            ]
+          },
+          "styles": {
+            "footer": {
+              "separator": true
+            }
+          }
+        };
         return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
       }
     </script>
