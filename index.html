@@ -77,11 +77,6 @@
         </button>
         </form>
       </div>
-      <!-- Start Footer -->
-      <div id="footer" class="center-align">
-        <p>© 2023 JS Service</p>
-      </div>
-      <!-- End Footer -->
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Integrating the LIFF SDK -->
@@ -136,6 +131,7 @@
             // Send messages
             liff
               .sendMessages(message)
+              .sendLineNotify()
               .then(() => {
                 liff.closeWindow();
               })
@@ -144,6 +140,19 @@
               });
           }
         }
+      }
+
+      function sendLineNotify()
+      {
+        // var token = ["Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N"];
+        var options = {
+          "method": "post",
+          "payload": "message=" + "คุณได้รับการแจ้งซ่อมใหม่",
+          "headers": {
+            "Authorization": "Bearer " + Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N
+          }
+        };
+        UrlFetchApp.fetch("https://notify-api.line.me/api/notify", options);
       }
 
       // Creat flex message
