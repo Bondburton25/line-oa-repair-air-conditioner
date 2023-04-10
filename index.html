@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>แบบฟอร์มซ่อมแอร์</title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <!-- Import Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <!-- Set Style -->
@@ -23,75 +22,78 @@
     <!-- Start Container -->
     <div class="container">
       <!-- Start Header Content -->
-      <div class="row">
+      <div class="row pt-5">
         <div class="col s12 center-align">
           <h5>แบบฟอร์มซ่อมแอร์</h5>
+          
         </div>
       </div>
       <!-- End Header Content -->
 
       <!-- Start Form Content -->
       <div class="row">
-        <form id="requestForm" class="col s12" autocomplete="off">
-
-        <div class="input-field">
-            <label for="project"><h6>โครงการ/บริษัท</h6></label>
-            <input id="project" type="text" class="validate" />
+        <form id="form" class="col-sm-4 col-12" autocomplete="off">
+          <hr>
+        <div class="mb-3">
+            <label class="form-label" for="project"><h6>โครงการ/บริษัท</h6></label class="form-label" >
+            <input id="project" type="text" class="form-control" />
         </div>
 
-        <div class="input-field">
-            <label for="customer"><h6>ชื่อลูกค้า</h6></label>
-            <input id="customer" type="text" class="validate" />
+
+        <div class="mb-3">
+            <label  for="customer"><h6>ชื่อลูกค้า</h6></label class="form-label" >
+            <input id="customer" type="text" required class="form-control" />
         </div>
 
-        <div class="input-field">
-            <label for="phoneNumber"><h6>เบอร์โทรศัพท์</h6></label>
-            <input id="phoneNumber" type="text" class="validate" />
+        <div class="mb-3">
+            <label class="form-label" for="phoneNumber"><h6>เบอร์โทรศัพท์</h6></label class="form-label" >
+            <input id="phoneNumber" type="text" required class="form-control" />
         </div>
 
-        <div class="input-field">
-            <label for="address"><h6>ที่อยู่หน้างาน</h6></label>
-            <input id="address" type="text" class="validate" />
+        <div class="mb-3">
+            <label class="form-label" for="address"><h6>ที่อยู่หน้างาน</h6></label class="form-label" >
+            <input id="address" type="text" required class="form-control" />
         </div>
 
-        <div class="input-field">
-            <label for="model"><h6>รุ่นแอร์ที่ต้องการแจ้งซ่อม</h6></label>
-            <input id="model" type="text" class="validate" />
+        <div class="mb-3">
+            <label class="form-label" for="model"><h6>รุ่นแอร์ที่ต้องการแจ้งซ่อม</h6></label class="form-label" >
+            <input id="model" type="text" class="form-control" />
         </div>
-        <div class="input-field">
-            <label for="serialNumber"><h6>หมายเลขเครื่อง</h6></label>
-            <input id="serialNumber" type="text" class="validate" />
+        <div class="mb-3">
+            <label class="form-label" for="serialNumber"><h6>หมายเลขเครื่อง</h6></label class="form-label" >
+            <input id="serialNumber" type="text" class="form-control" />
         </div>
         
-        <div class="input-field">
-            <label for="malfunction">อาการแอร์ของแอร์</label>
-            <textarea id="malfunction" class="materialize-textarea"></textarea>
+        <div class="mb-3">
+            <label class="form-label" for="malfunction">อาการแอร์ของแอร์</label class="form-label" >
+            <textarea id="malfunction" class="form-control"></textarea>
         </div>
 
-        <div class="input-field">
-            <label for="email">อีเมล</label>
-            <input id="email" type="email" class="" />
+        <div class="mb-3">
+            <label class="form-label" for="email">อีเมล</label class="form-label" >
+            <input id="email" type="email" class="form-control" />
         </div>
 
-        <div class="input-field">
-            <label for="lineId">LINE ID</label>
-            <input id="lineId" type="text" class="" />
+        <div class="mb-3">
+            <label class="form-label" for="lineId">LINE ID</label class="form-label" >
+            <input id="lineId" type="text" class="form-control" />
         </div>
 
-        <button id="btn" class="btn waves-effect waves-light" type="submit">
+        <div class="mb-3">
+         <label for="meetingDate">วันเวลาที่สะดวก:</label>
+         <input type="datetime-local" id="meetingDate" name="meetingDate" class="form-control">
+        </div>
+
+        <button id="btn" class="btn btn-primary" type="submit">
             ส่งข้อมูล
         </button>
         </form>
       </div>
-      <div id="footer" class="center-align">
-        <p>© 2023 JS Service</p>
-      </div>
-      <!-- End Footer -->
+
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-      // Initialize LIFF
       liff
         .init({ liffId: "1657806485-BKxNWbMp" })
         .then(() => {
@@ -116,8 +118,7 @@
           let email = document.getElementById("email").value;
           let malfunction = document.getElementById("malfunction").value;
           let lineId = document.getElementById("lineId").value;
-          // let meetingTime = document.getElementById("meeting-time").value;
-          
+          let meetingDate = document.getElementById("meetingDate").value;
           // Reset form
           form.reset();
 
@@ -154,7 +155,7 @@
               },
               {
                 "type": "text",
-                "text": "ที่อยู่หน้างาน Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "text": "ที่อยู่หน้างาน" `${address}`,
                 "size": "xs",
                 "color": "#aaaaaa",
                 "wrap": true
@@ -182,7 +183,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "แอร์ผนัง DAIKIN FTKF12XV2S 12300 บีทียู อินเวอร์เตอร์",
+                        "text": `${model}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end",
@@ -203,7 +204,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "1227321",
+                        "text": `${serialNumber}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end",
@@ -224,7 +225,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "แอร์ทำงานเสียดังมากและไม่เย็น",
+                        "text": `${malfunction}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end",
@@ -249,7 +250,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "คุณ ไกรวิชญ์ วรรณ์แก้ว",
+                        "text": `${customer}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end",
@@ -269,7 +270,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "$7.31",
+                        "text": `${phoneNumber}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end"
@@ -288,7 +289,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "werkewrkweor",
+                        "text": `${lineId}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end"
@@ -300,6 +301,44 @@
                     "layout": "horizontal",
                     "contents": [
                       {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "โครงการ/บริษัท",
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": `${project}`,
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": `${phoneNumber}`,
+                            "size": "sm",
+                            "color": "#555555"
+                          },
+                          {
+                            "type": "text",
+                            "text": "$7.31",
+                            "size": "sm",
+                            "color": "#111111",
+                            "align": "end"
+                          }
+                        ]
+                      },
+                      {
                         "type": "text",
                         "text": "Email",
                         "size": "sm",
@@ -307,7 +346,7 @@
                       },
                       {
                         "type": "text",
-                        "text": "kraiwit.dev@gmail.com",
+                        "text": `${email}`,
                         "size": "sm",
                         "color": "#111111",
                         "align": "end",
@@ -327,6 +366,17 @@
         };
         return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
       }
+
+      // function setContent(content)
+      // {
+      //   var opt = {
+      //     "Method": "POST",
+      //     "payload": {"message": content},
+      //     "headers": {"Authorization": "Bearer " + Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N}
+      //   }
+      //   UrlFeatchApp.fetch("https://notify-api.line.me/api/notify", opt)
+      // }
+
     </script>
   </body>
 </html>
