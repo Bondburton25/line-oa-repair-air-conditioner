@@ -81,7 +81,7 @@
 
         <div class="mb-3">
          <label for="meetingDate">วันเวลาที่สะดวก:</label>
-         <input type="datetime-local" id="meetingDate" name="meetingDate" class="form-control">
+         <input type="datetime-local" id="meetingDate" class="form-control">
         </div>
 
         <button id="btn" class="btn btn-primary" type="submit">
@@ -119,13 +119,14 @@
           let malfunction = document.getElementById("malfunction").value;
           let lineId = document.getElementById("lineId").value;
           let meetingDate = document.getElementById("meetingDate").value;
+          
           // Reset form
           form.reset();
 
           // Sends messages on behalf of the user to the chat screen where the LIFF app is opened.
           if (liff.getContext().type !== "none" && liff.getContext().type !== "external") {
             // Create flex message
-            let message = createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId);
+            let message = createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingDate);
             // Send messages
             liff.sendMessages(message).then(() => {
                 liff.closeWindow();
@@ -138,7 +139,7 @@
       }
 
       // Creat flex message
-      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId)
+      function createFlexMessage(project, customer, phoneNumber, address, model, serialNumber, email, malfunction, lineId, meetingDate)
       {
         let flexJson = {
           "type": "bubble",
@@ -155,7 +156,7 @@
               },
               {
                 "type": "text",
-                "text": "ที่อยู่หน้างาน" `${address}`,
+                "text": `${address}`,
                 "size": "xs",
                 "color": "#aaaaaa",
                 "wrap": true
@@ -366,17 +367,6 @@
         };
         return [{ type: "flex", altText: "ข้อมูลการซ่อม", contents: flexJson }];
       }
-
-      // function setContent(content)
-      // {
-      //   var opt = {
-      //     "Method": "POST",
-      //     "payload": {"message": content},
-      //     "headers": {"Authorization": "Bearer " + Tmx0ZeZ3umm8866xsI59uclOiRCxxuULyWVJjsNHL7N}
-      //   }
-      //   UrlFeatchApp.fetch("https://notify-api.line.me/api/notify", opt)
-      // }
-
     </script>
   </body>
 </html>
